@@ -25,6 +25,20 @@ Space: O(1) — we only use a few variables.
 
 This is generally preferable to sorting or creating another array because it keeps the solution linear time and constant space.
 
+const nums = [3, 0, 1]
+
+let unique = 0;
+for (let num of nums) {
+  unique = unique ^ num;
+  // Start: unique = 0
+  // Loop 1 (num = 3): 0 ^ 3 -> 3 (Anything XORed with 0 is itself)
+  // Loop 2 (num = 0): 3 ^ 0 -> 3
+  // Loop 3 (num = 1): 3 ^ 1 -> 2 (Binary: 11 ^ 01 = 10)
+}
+
+return unique;
+// Conceptually: 3 ^ 0 ^ 1 => 2
+
 ===
 XOR
 
@@ -126,37 +140,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
   // Time: O(n);
   // Space: O(1);
 } */
-/* function missingNumber(nums: number[]): number {
-  // if nums = [3, 0, 1]
-  
-  const num = nums.length;
-  let res = num;
-  
-  for (let i = 0; i < num; i++) {
-    res = res ^ i ^ (nums[i] ?? 0); // XOR the index and the value
-  }
-
-  return res;
-
-  let result = nums.length;
-  for (let i = 0; i < nums.length; i++) {
-    result ^= i; // 3 ^ 0 = 3, 0 ^ 1 = 1, 1 ^ 2 = 3 (01 + 10 = 11)
-    result ^= nums[i] ?? 0; // 3 ^ 3 = 0, 1 ^ 0 = 1, 3 ^ 1 = 2 (11 + 01 = 10)
-  }
-  return result;
-  // Conceptually: 3 ^ 0 ^ 3 ^ 1 ^ 0 ^ 2 ^ 1 => (0^0)^(1^1)^(3^3)^2 = 0^0^0^2 = 2
-  
-  let unique = 0;
-  for (let num of nums) {
-    unique = unique ^ num;
-    // Start: unique = 0
-    // Loop 1 (num = 3): 0 ^ 3 -> 3 (Anything XORed with 0 is itself)
-    // Loop 2 (num = 0): 3 ^ 0 -> 3
-    // Loop 3 (num = 1): 3 ^ 1 -> 2 (Binary: 11 ^ 01 = 10)
-  }
-  return unique;
-  // Conceptually: 3 ^ 0 ^ 1 => 2
-} */
+function missingNumber(nums) {
+    // if nums = [3, 0, 1]
+    let result = nums.length;
+    for (let i = 0; i < nums.length; i++) {
+        result ^= i; // 3 ^ 0 = 3, 0 ^ 1 = 1, 1 ^ 2 = 3 (01 + 10 = 11)
+        result ^= nums[i] ?? 0; // 3 ^ 3 = 0, 1 ^ 0 = 1, 3 ^ 1 = 2 (11 + 01 = 10)
+    }
+    return result;
+    // Conceptually: 3 ^ 0 ^ 3 ^ 1 ^ 0 ^ 2 ^ 1 => (0^0)^(1^1)^(3^3)^2 = 0^0^0^2 = 2
+    const num = nums.length;
+    let res = num;
+    for (let i = 0; i < num; i++) {
+        res = res ^ i ^ (nums[i] ?? 0); // XOR the index and the value
+    }
+    return res;
+}
 // Brute Force — Nested Loop
 /* function missingNumber(nums: number[]) {
   const num = nums.length;
@@ -241,25 +240,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
   // Space: O(n)
 } */
 // Using an Array as a Lookup Table
-function missingNumber(nums) {
-    const seen = new Array(nums.length + 1).fill(false);
-    // console.log(seen); // [ false, false, false, false ]
-    for (let i = 0; i < nums.length; i++) {
-        const num = nums[i];
-        if (num !== undefined) {
-            seen[num] = true;
-        }
+/* function missingNumber(nums: number[]) {
+  const seen: boolean[] = new Array(nums.length + 1).fill(false);
+  // console.log(seen); // [ false, false, false, false ]
+
+  for (let i = 0; i < nums.length; i++) {
+    const num = nums[i];
+
+    if (num !== undefined) {
+      seen[num] = true;
     }
-    // console.log(seen); // [ true, true, false, true ]
-    for (let i = 0; i <= nums.length; i++) {
-        if (!seen[i]) {
-            return i;
-        }
+  }
+
+  // console.log(seen); // [ true, true, false, true ]
+
+  for (let i = 0; i <= nums.length; i++) {
+    if (!seen[i]) {
+      return i;
     }
-    // Complexity
-    // Time: O(n)
-    // Space: O(n)
-}
+  }
+
+  // Complexity
+  // Time: O(n)
+  // Space: O(n)
+} */
 console.log(missingNumber([3, 0, 1])); // 2
 console.log(missingNumber([0, 1])); // 2
 console.log(missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1])); // 8
