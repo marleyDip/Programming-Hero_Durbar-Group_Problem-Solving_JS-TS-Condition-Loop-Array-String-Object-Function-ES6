@@ -65,7 +65,7 @@ function getPageMetadata(totalItems, pageSize, currentPage) {
         };
     }
     const offset = (currentPage - 1) * pageSize;
-    console.log("Last Previous Items:", offset);
+    // console.log("Last Previous Items:", offset);
     return {
         totalPages,
         startItem: offset + 1,
