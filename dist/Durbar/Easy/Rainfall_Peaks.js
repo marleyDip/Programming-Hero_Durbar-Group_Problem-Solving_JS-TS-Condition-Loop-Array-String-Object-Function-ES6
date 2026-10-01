@@ -36,7 +36,7 @@ function findRainfallPeaks(rainfall) {
             next !== undefined &&
             current > previous &&
             current > next) {
-            peaks.push(i + 1);
+            peaks.push(i + 1); // Convert 0-based index to 1-based day
         }
     }
     return peaks;
@@ -50,7 +50,7 @@ function findRainfallPeaks(rainfall) {
   const peaks: number[] = [];
 
   // Looping with destructuring
-  // for (let [index, value] of rainfall.entries()){}
+  // for (const [index, value] of rainfall.entries()){}
 
   // using forEach()
   rainfall.forEach((value, index) => {

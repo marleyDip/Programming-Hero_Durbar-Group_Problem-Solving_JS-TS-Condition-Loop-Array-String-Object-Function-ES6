@@ -56,26 +56,20 @@ function getStatus(percentage) {
             return "At Risk";
     }
 }
-/* function formatAttendanceReport(students: Student[]): string[] {
-  return students.map((student) => {
-    const percentage = Math.round((student.present / student.total) * 100);
-
-    // console.log("Total percentage", percentage);
-
-    const status: "Excellent" | "Good" | "At Risk" =
-      percentage >= 90 ? "Excellent" : percentage >= 75 ? "Good" : "At Risk";
-
-    // const status = getStatus(percentage);
-
-    return `${student.name}: ${student.present}/${student.total} (${percentage}%) - ${status}`;
-    
-    return `${student.name}: ${student.present}/${student.total} (${percentage}%) - ${getStatus(percentage)}`;
-  });
-
-  // Complexity
-  // Time: O(n)
-  // Space: O(n) because we create a new array containing n report strings.
-} */
+function formatAttendanceReport(students) {
+    return students.map((student) => {
+        const percentage = Math.round((student.present / student.total) * 100);
+        // console.log("Total percentage", percentage);
+        const status = percentage >= 90 ? "Excellent" : percentage >= 75 ? "Good" : "At Risk";
+        // const status = getStatus(percentage);
+        return `${student.name}: ${student.present}/${student.total} (${percentage}%) - ${status}`;
+        return `${student.name}: ${student.present}/${student.total} (${percentage}%) - ${getStatus(percentage)}`;
+        return `${student.name}: ${student.present}/${student.total} (${percentage}%) - ${percentage >= 90 ? "Excellent" : percentage >= 75 ? "Good" : "At Risk"}`;
+    });
+    // Complexity
+    // Time: O(n)
+    // Space: O(n) because we create a new array containing n report strings.
+}
 // for loop and for...of loop
 /* function formatAttendanceReport(students: Student[]): string[] {
   const reports: string[] = [];
@@ -111,28 +105,35 @@ function getStatus(percentage) {
   // Space: O(n) because we create a new array containing n report strings.
 } */
 // Using Reduce & Lookup Array
-function formatAttendanceReport(students) {
-    // This approach is useful when have many status rules.
-    // CRITICAL: Keep these sorted from highest 'min' to lowest 'min'
-    const statusRules = [
-        { min: 90, status: "Excellent" },
-        { min: 75, status: "Good" },
-        { min: 0, status: "At Risk" },
-    ];
-    return students.reduce((reports, student) => {
-        // Avoid Division by Zero if a student has 0 total classes
-        const percentage = student.total > 0
-            ? Math.round((student.present / student.total) * 100)
-            : 0;
-        // TypeScript infers the fallback object type literally: { min: number, status: "At Risk" }
-        const rule = statusRules.find((rule) => percentage >= rule.min) ?? {
-            min: 0,
-            status: "At Risk",
-        };
-        reports.push(`${student.name}: ${student.present}/${student.total} (${percentage}%) - ${rule?.status}`);
-        return reports;
-    }, []);
-}
+/* function formatAttendanceReport(students: Student[]): string[] {
+  // This approach is useful when have many status rules.
+  // CRITICAL: Keep these sorted from highest 'min' to lowest 'min'
+  const statusRules: StatusRule[] = [
+    { min: 90, status: "Excellent" },
+    { min: 75, status: "Good" },
+    { min: 0, status: "At Risk" },
+  ];
+
+  return students.reduce((reports: string[], student: Student) => {
+    // Avoid Division by Zero if a student has 0 total classes
+    const percentage =
+      student.total > 0
+        ? Math.round((student.present / student.total) * 100)
+        : 0;
+
+    // TypeScript infers the fallback object type literally: { min: number, status: "At Risk" }
+    const rule = statusRules.find((rule) => percentage >= rule.min) ?? {
+      min: 0,
+      status: "At Risk" as const,
+    };
+
+    reports.push(
+      `${student.name}: ${student.present}/${student.total} (${percentage}%) - ${rule?.status}`,
+    );
+
+    return reports;
+  }, []);
+} */
 console.log(formatAttendanceReport([{ name: "Rafi", present: 18, total: 20 }])); // ["Rafi: 18/20 (90%) - Excellent"]);
 console.log(formatAttendanceReport([
     { name: "Lina", present: 15, total: 20 },

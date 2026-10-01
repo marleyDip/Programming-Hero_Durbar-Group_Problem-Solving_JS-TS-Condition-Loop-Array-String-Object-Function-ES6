@@ -73,7 +73,7 @@ function getStatus(percentage: number): Status {
   }
 }
 
-/* function formatAttendanceReport(students: Student[]): string[] {
+function formatAttendanceReport(students: Student[]): string[] {
   return students.map((student) => {
     const percentage = Math.round((student.present / student.total) * 100);
 
@@ -85,14 +85,16 @@ function getStatus(percentage: number): Status {
     // const status = getStatus(percentage);
 
     return `${student.name}: ${student.present}/${student.total} (${percentage}%) - ${status}`;
-    
+
     return `${student.name}: ${student.present}/${student.total} (${percentage}%) - ${getStatus(percentage)}`;
+
+    return `${student.name}: ${student.present}/${student.total} (${percentage}%) - ${percentage >= 90 ? "Excellent" : percentage >= 75 ? "Good" : "At Risk"}`;
   });
 
   // Complexity
   // Time: O(n)
   // Space: O(n) because we create a new array containing n report strings.
-} */
+}
 
 // for loop and for...of loop
 /* function formatAttendanceReport(students: Student[]): string[] {
@@ -130,7 +132,7 @@ function getStatus(percentage: number): Status {
 } */
 
 // Using Reduce & Lookup Array
-function formatAttendanceReport(students: Student[]): string[] {
+/* function formatAttendanceReport(students: Student[]): string[] {
   // This approach is useful when have many status rules.
   // CRITICAL: Keep these sorted from highest 'min' to lowest 'min'
   const statusRules: StatusRule[] = [
@@ -158,7 +160,7 @@ function formatAttendanceReport(students: Student[]): string[] {
 
     return reports;
   }, []);
-}
+} */
 
 console.log(formatAttendanceReport([{ name: "Rafi", present: 18, total: 20 }])); // ["Rafi: 18/20 (90%) - Excellent"]);
 

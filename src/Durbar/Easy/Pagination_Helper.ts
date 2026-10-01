@@ -91,6 +91,7 @@ function getPageMetadata(
 
     // startItem: (currentPage - 1) * pageSize + 1,
     // endItem: Math.min(currentPage * pageSize, totalItems),
+    // endItem: currentPage * pageSize > totalItems ? totalItems : currentPage * pageSize,
     // hasPrev: currentPage !== 1,
     // hasNext: currentPage !== totalPages,
   };

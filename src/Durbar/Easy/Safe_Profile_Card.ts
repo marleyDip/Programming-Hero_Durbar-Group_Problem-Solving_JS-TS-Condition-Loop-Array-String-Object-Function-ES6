@@ -22,6 +22,7 @@ interface ProfileCardType {
 
 // function generateProfileCard(user: any): string {}
 
+// Using destructuring ({}) and nullish coalescing operator (??) and optional chaining (?.)
 function generateProfileCard(user: ProfileCardType): string {
   // Nested destructuring with defaults only works for undefined, not null.
   //   const {
@@ -50,6 +51,58 @@ function generateProfileCard(user: ProfileCardType): string {
 
   // return `${user?.name ?? "Anonymous"} | ${user?.address?.city ?? "Unknown"} | followers: ${user?.social?.followers ?? 0}`;
 }
+
+// Generic field configuration (Object And Array) and Without optional chaining
+/* function generateProfileCard(user: ProfileCardType): string {
+  // Object with map() method with destructuring (object and array)
+  const fields = [
+    { value: user?.name, fallback: "Anonymous" },
+    { value: user?.address?.city, fallback: "Unknown" },
+    { value: user?.social?.followers, fallback: 0 },
+  ];
+
+  // Destructuring
+  const [name, city, followers] = fields.map(
+    ({ value, fallback }) => value ?? fallback,
+  );
+
+  return `${name} | ${city} | followers: ${followers}`;
+
+  // Array with join() method
+  const values = [
+    user?.name ?? "Anonymous",
+    user?.address?.city ?? "Unknown",
+    `followers: ${user?.social?.followers ?? 0}`,
+  ];
+
+  return values
+    .map((value, index) => {
+      if (index === 0) return value;
+      if (index === 1) return value;
+      return `followers: ${value}`;
+    })
+    .join(" | ");
+
+  // // It works, but it's unnecessarily verbose. That's exactly one reason optional chaining was introduced.
+
+  // const name = user.name ?? "Anonymous";
+
+  // const city =
+  //   user.address &&
+  //   user.address.city !== null &&
+  //   user.address.city !== undefined
+  //     ? user.address.city
+  //     : "Unknown";
+
+  // const followers =
+  //   user.social &&
+  //   user.social.followers !== null &&
+  //   user.social.followers !== undefined
+  //     ? user.social.followers
+  //     : 0;
+
+  // return `${name} | ${city} | followers: ${followers}`;
+} */
 
 console.log(
   generateProfileCard({
