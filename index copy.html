@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Interactive TypeScript Problem Solving Lab — practice conditions, loops, arrays, strings, objects, functions and ES6."
+    />
+
+    <meta name="theme-color" content="#08090d" />
+
+    <title>TS Problem Lab — Interactive TypeScript Playground</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <style>
+      :root {
+        --bg: #08090d;
+        --bg-soft: #0d0f15;
+        --panel: rgba(17, 19, 27, 0.82);
+        --panel-solid: #11131b;
+        --panel-hover: #161923;
+
+        --border: rgba(255, 255, 255, 0.08);
+        --border-bright: rgba(255, 255, 255, 0.14);
+
+        --text: #f5f7fb;
+        --muted: #8c93a3;
+        --muted-light: #b8becb;
+
+        --primary: #ccff00;
+        --primary-soft: rgba(204, 255, 0, 0.1);
+
+        --purple: #8b5cf6;
+        --blue: #38bdf8;
+        --danger: #fb7185;
+        --success: #4ade80;
+        --warning: #facc15;
+
+        --radius-sm: 10px;
+        --radius-md: 16px;
+        --radius-lg: 24px;
+
+        --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+
+        --mono: "JetBrains Mono", monospace;
+
+        --sans: "Inter", sans-serif;
+
+        --display: "Space Grotesk", sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-height: 100vh;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at 10% 0%,
+            rgba(139, 92, 246, 0.12),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 90% 10%,
+            rgba(204, 255, 0, 0.07),
+            transparent 25%
+          ),
+          var(--bg);
+
+        font-family: var(--sans);
+        overflow-x: hidden;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      /* =========================
+         BACKGROUND
+      ========================= */
+
+      .background-grid {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -2;
+
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+          );
+
+        background-size: 40px 40px;
+
+        mask-image: linear-gradient(to bottom, black, transparent 80%);
+      }
+
+      .orb {
+        position: fixed;
+        width: 380px;
+        height: 380px;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0.12;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .orb-one {
+        top: 10%;
+        left: -150px;
+        background: var(--purple);
+      }
+
+      .orb-two {
+        top: 40%;
+        right: -180px;
+        background: var(--primary);
+      }
+
+      /* =========================
+         APP
+      ========================= */
+
+      .app {
+        min-height: 100vh;
+      }
+
+      .container {
+        width: min(1500px, calc(100% - 40px));
+        margin-inline: auto;
+      }
+
+      /* =========================
+         NAVBAR
+      ========================= */
+
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+
+        border-bottom: 1px solid var(--border);
+
+        background: rgba(8, 9, 13, 0.78);
+
+        backdrop-filter: blur(20px);
+      }
+
+      .navbar-inner {
+        height: 76px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        text-decoration: none;
+        color: var(--text);
+      }
+
+      .brand-icon {
+        width: 42px;
+        height: 42px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 12px;
+
+        background: linear-gradient(135deg, var(--primary), #8cff00);
+
+        color: #08090d;
+
+        box-shadow: 0 0 30px rgba(204, 255, 0, 0.18);
+      }
+
+      .brand-text {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 17px;
+      }
+
+      .brand-text span {
+        color: var(--primary);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .github-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 10px 15px;
+
+        border: 1px solid var(--border);
+        border-radius: 10px;
+
+        color: var(--muted-light);
+        background: rgba(255, 255, 255, 0.025);
+
+        text-decoration: none;
+
+        transition: 0.25s ease;
+      }
+
+      .github-button:hover {
+        border-color: var(--border-bright);
+        color: var(--text);
+        transform: translateY(-2px);
+      }
+
+      /* =========================
+         HERO
+      ========================= */
+
+      .hero {
+        padding: 90px 0 55px;
+        text-align: center;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 7px 12px;
+
+        border: 1px solid rgba(204, 255, 0, 0.18);
+
+        border-radius: 999px;
+
+        color: var(--primary);
+        background: var(--primary-soft);
+
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .hero-title {
+        max-width: 950px;
+        margin: 24px auto 0;
+
+        font-family: var(--display);
+        font-size: clamp(42px, 7vw, 82px);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+      }
+
+      .hero-title span {
+        color: transparent;
+
+        background: linear-gradient(
+          100deg,
+          var(--primary),
+          #ffffff 48%,
+          #a78bfa
+        );
+
+        background-clip: text;
+        -webkit-background-clip: text;
+      }
+
+      .hero-description {
+        max-width: 680px;
+        margin: 26px auto 0;
+
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .hero-stats {
+        margin-top: 40px;
+
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .stat {
+        min-width: 145px;
+
+        padding: 14px 18px;
+
+        border: 1px solid var(--border);
+        border-radius: 14px;
+
+        background: rgba(255, 255, 255, 0.025);
+
+        text-align: left;
+      }
+
+      .stat strong {
+        display: block;
+
+        font-family: var(--display);
+        font-size: 20px;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      /* =========================
+         WORKSPACE
+      ========================= */
+
+      .workspace {
+        display: grid;
+
+        grid-template-columns:
+          300px
+          minmax(0, 1fr);
+
+        gap: 18px;
+
+        padding-bottom: 80px;
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.045),
+          rgba(255, 255, 255, 0.015)
+        );
+
+        backdrop-filter: blur(18px);
+
+        box-shadow: var(--shadow);
+      }
+
+      /* =========================
+         SIDEBAR
+      ========================= */
+
+      .sidebar {
+        position: sticky;
+        top: 94px;
+
+        height: calc(100vh - 115px);
+
+        padding: 18px;
+
+        overflow-y: auto;
+      }
+
+      .sidebar-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 16px;
+      }
+
+      .sidebar-title h2 {
+        font-family: var(--display);
+        font-size: 15px;
+      }
+
+      .count {
+        padding: 4px 8px;
+
+        border-radius: 999px;
+
+        background: var(--primary-soft);
+        color: var(--primary);
+
+        font-family: var(--mono);
+        font-size: 11px;
+      }
+
+      .search {
+        position: relative;
+        margin-bottom: 18px;
+      }
+
+      .search input {
+        width: 100%;
+
+        padding: 12px 12px 12px 38px;
+
+        color: var(--text);
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        outline: none;
+        background: rgba(0, 0, 0, 0.18);
+
+        transition: 0.2s ease;
+      }
+
+      .search input:focus {
+        border-color: rgba(204, 255, 0, 0.45);
+
+        box-shadow: 0 0 0 3px rgba(204, 255, 0, 0.06);
+      }
+
+      .search i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        width: 16px;
+
+        color: var(--muted);
+      }
+
+      /* Category */
+
+      .category {
+        margin-bottom: 8px;
+      }
+
+      .category-button {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        padding: 12px;
+
+        border: 0;
+        border-radius: 11px;
+
+        color: var(--muted-light);
+        background: transparent;
+
+        text-align: left;
+
+        transition: 0.2s ease;
+      }
+
+      .category-button:hover,
+      .category-button.active {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .category-button.active {
+        box-shadow: inset 2px 0 0 var(--primary);
+      }
+
+      .category-chevron {
+        margin-left: auto;
+        transition: transform 0.2s ease;
+      }
+
+      .category.open .category-chevron {
+        transform: rotate(90deg);
+      }
+
+      .subcategories {
+        display: none;
+
+        padding: 4px 0 7px 12px;
+      }
+
+      .category.open .subcategories {
+        display: block;
+      }
+
+      .problem-button {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 8px 10px;
+
+        border: 0;
+        border-radius: 8px;
+
+        color: var(--muted);
+        background: transparent;
+
+        font-size: 12px;
+        text-align: left;
+
+        transition: 0.2s ease;
+      }
+
+      .problem-button:hover,
+      .problem-button.active {
+        color: var(--primary);
+        background: var(--primary-soft);
+      }
+
+      .problem-dot {
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      /* =========================
+         MAIN LAB
+      ========================= */
+
+      .lab {
+        min-width: 0;
+      }
+
+      .lab-header {
+        padding: 22px;
+
+        border-bottom: 1px solid var(--border);
+
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .breadcrumb {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .breadcrumb span {
+        color: var(--primary);
+      }
+
+      .problem-title {
+        margin-top: 7px;
+
+        font-family: var(--display);
+        font-size: 25px;
+      }
+
+      .problem-description {
+        max-width: 700px;
+        margin-top: 8px;
+
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .difficulty {
+        align-self: flex-start;
+
+        padding: 6px 10px;
+
+        border: 1px solid rgba(204, 255, 0, 0.18);
+
+        border-radius: 999px;
+
+        color: var(--primary);
+        background: var(--primary-soft);
+
+        font-family: var(--mono);
+        font-size: 11px;
+      }
+
+      /* =========================
+         INPUT
+      ========================= */
+
+      .input-section {
+        padding: 18px 22px;
+
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section-label {
+        margin-bottom: 9px;
+
+        color: var(--muted-light);
+
+        font-size: 11px;
+        font-weight: 700;
+
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .input-row {
+        display: grid;
+
+        grid-template-columns:
+          minmax(0, 1fr)
+          auto;
+
+        gap: 10px;
+      }
+
+      .input-box {
+        width: 100%;
+
+        padding: 13px 14px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        outline: none;
+
+        color: var(--text);
+        background: rgba(0, 0, 0, 0.22);
+
+        font-family: var(--mono);
+        font-size: 13px;
+
+        transition: 0.2s ease;
+      }
+
+      .input-box:focus {
+        border-color: rgba(204, 255, 0, 0.45);
+      }
+
+      .run-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 0 18px;
+
+        border: 0;
+        border-radius: 12px;
+
+        background: var(--primary);
+        color: #08090d;
+
+        font-weight: 800;
+
+        transition: 0.2s ease;
+      }
+
+      .run-button:hover {
+        transform: translateY(-2px);
+
+        box-shadow: 0 10px 30px rgba(204, 255, 0, 0.18);
+      }
+
+      .run-button:active {
+        transform: translateY(0);
+      }
+
+      /* =========================
+         SOLUTION TABS
+      ========================= */
+
+      .solution-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        padding: 12px 22px;
+
+        border-bottom: 1px solid var(--border);
+      }
+
+      .solution-select {
+        min-width: 230px;
+
+        padding: 9px 12px;
+
+        border: 1px solid var(--border);
+        border-radius: 10px;
+
+        outline: none;
+
+        color: var(--text);
+        background: #11131b;
+
+        font-size: 12px;
+      }
+
+      .solution-select option {
+        background: #11131b;
+      }
+
+      .editor {
+        position: relative;
+
+        min-height: 390px;
+
+        padding: 22px;
+
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.18),
+          rgba(0, 0, 0, 0.3)
+        );
+      }
+
+      .code-editor {
+        width: 100%;
+        min-height: 345px;
+
+        resize: vertical;
+
+        padding: 20px;
+
+        border: 1px solid var(--border);
+        border-radius: 14px;
+
+        outline: none;
+
+        color: #dce2ec;
+        background: #0a0b0f;
+
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.8;
+
+        tab-size: 2;
+
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      }
+
+      .code-editor:focus {
+        border-color: rgba(139, 92, 246, 0.4);
+
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.05);
+      }
+
+      /* =========================
+         OUTPUT
+      ========================= */
+
+      .output-section {
+        padding: 22px;
+
+        border-top: 1px solid var(--border);
+      }
+
+      .output-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 10px;
+      }
+
+      .output-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+        background: var(--muted);
+      }
+
+      .status-dot.success {
+        background: var(--success);
+        box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+      }
+
+      .status-dot.error {
+        background: var(--danger);
+        box-shadow: 0 0 10px rgba(251, 113, 133, 0.5);
+      }
+
+      .output {
+        min-height: 130px;
+
+        padding: 16px;
+
+        border: 1px solid var(--border);
+        border-radius: 14px;
+
+        background: #08090d;
+
+        overflow: auto;
+
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      .output-line {
+        color: #d7dce5;
+      }
+
+      .output-line.error {
+        color: var(--danger);
+      }
+
+      .output-empty {
+        color: #555d6c;
+      }
+
+      /* =========================
+         DEBUG INFO
+      ========================= */
+
+      .debug-grid {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 10px;
+
+        margin-top: 12px;
+      }
+
+      .debug-card {
+        padding: 12px;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .debug-card span {
+        display: block;
+
+        color: var(--muted);
+
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+
+      .debug-card strong {
+        display: block;
+
+        margin-top: 5px;
+
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+
+      /* =========================
+         FOOTER
+      ========================= */
+
+      footer {
+        padding: 30px 0 50px;
+
+        border-top: 1px solid var(--border);
+
+        color: var(--muted);
+        text-align: center;
+
+        font-size: 12px;
+      }
+
+      footer a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      /* =========================
+         RESPONSIVE
+      ========================= */
+
+      @media (max-width: 1050px) {
+        .workspace {
+          grid-template-columns: 250px minmax(0, 1fr);
+        }
+      }
+
+      @media (max-width: 850px) {
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: relative;
+          top: 0;
+
+          height: auto;
+          max-height: 450px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          width: min(100% - 24px, 1500px);
+        }
+
+        .navbar-inner {
+          height: 68px;
+        }
+
+        .brand-text {
+          display: none;
+        }
+
+        .github-button span {
+          display: none;
+        }
+
+        .hero {
+          padding-top: 60px;
+        }
+
+        .hero-title {
+          font-size: 45px;
+        }
+
+        .lab-header {
+          flex-direction: column;
+        }
+
+        .input-row {
+          grid-template-columns: 1fr;
+        }
+
+        .run-button {
+          min-height: 46px;
+          justify-content: center;
+        }
+
+        .solution-bar {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .solution-select {
+          width: 100%;
+        }
+
+        .debug-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="background-grid"></div>
+
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+
+    <div class="app">
+      <!-- =========================
+           NAVBAR
+      ========================== -->
+
+      <header class="navbar">
+        <div class="container navbar-inner">
+          <a href="#" class="brand">
+            <div class="brand-icon">
+              <i data-lucide="terminal"></i>
+            </div>
+
+            <div class="brand-text">TS<span>Problem</span>Lab</div>
+          </a>
+
+          <div class="nav-actions">
+            <a
+              class="github-button"
+              href="https://github.com/marleyDip/Programming-Hero_Durbar-Group_Problem-Solving_JS-TS-Condition-Loop-Array-String-Object-Function-ES6"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i data-lucide="github"></i>
+              <span>Repository</span>
+              <i data-lucide="external-link"></i>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- =========================
+           HERO
+      ========================== -->
+
+      <main>
+        <section class="hero container">
+          <div class="hero-badge">
+            <i data-lucide="sparkles"></i>
+            Interactive TypeScript Lab
+          </div>
+
+          <h1 class="hero-title">
+            Learn TypeScript by
+            <span>Running the Code.</span>
+          </h1>
+
+          <p class="hero-description">
+            Explore problem-solving concepts through conditions, loops, arrays,
+            strings, objects, functions and modern ES6 solutions. Select a
+            problem, choose a solution, provide your own input and execute it
+            instantly.
+          </p>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong id="categoryCount"> 08 </strong>
+
+              <span> Categories </span>
+            </div>
+
+            <div class="stat">
+              <strong id="problemCount"> 00 </strong>
+
+              <span> Problems </span>
+            </div>
+
+            <div class="stat">
+              <strong> TS </strong>
+
+              <span> TypeScript </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- =========================
+             WORKSPACE
+        ========================== -->
+
+        <section class="container workspace">
+          <!-- SIDEBAR -->
+
+          <aside class="panel sidebar">
+            <div class="sidebar-title">
+              <h2>Problem Explorer</h2>
+
+              <span class="count" id="sidebarCount"> 0 </span>
+            </div>
+
+            <div class="search">
+              <i data-lucide="search"></i>
+
+              <input
+                id="problemSearch"
+                type="search"
+                placeholder="Search problems..."
+                autocomplete="off"
+              />
+            </div>
+
+            <div id="problemTree"></div>
+          </aside>
+
+          <!-- MAIN LAB -->
+
+          <section class="panel lab">
+            <!-- Problem Header -->
+
+            <div class="lab-header">
+              <div>
+                <div class="breadcrumb">
+                  <span id="breadcrumbCategory"> Condition </span>
+
+                  /
+
+                  <span id="breadcrumbProblem"> Problem </span>
+                </div>
+
+                <h2 class="problem-title" id="problemTitle">
+                  Select a problem
+                </h2>
+
+                <p class="problem-description" id="problemDescription">
+                  Choose a problem from the explorer to start experimenting.
+                </p>
+              </div>
+
+              <div class="difficulty" id="difficulty">Beginner</div>
+            </div>
+
+            <!-- INPUT -->
+
+            <div class="input-section">
+              <div class="section-label">Program Input</div>
+
+              <div class="input-row">
+                <input
+                  id="programInput"
+                  class="input-box"
+                  type="text"
+                  placeholder="Enter input for your program..."
+                />
+
+                <button id="runButton" class="run-button" type="button">
+                  <i data-lucide="play"></i>
+                  Run Code
+                </button>
+              </div>
+            </div>
+
+            <!-- SOLUTION SELECTOR -->
+
+            <div class="solution-bar">
+              <div class="section-label">Solution</div>
+
+              <select id="solutionSelect" class="solution-select">
+                <option>Select a solution</option>
+              </select>
+            </div>
+
+            <!-- CODE EDITOR -->
+
+            <div class="editor">
+              <textarea
+                id="codeEditor"
+                class="code-editor"
+                spellcheck="false"
+              ></textarea>
+            </div>
+
+            <!-- OUTPUT -->
+
+            <div class="output-section">
+              <div class="output-header">
+                <div class="section-label">Console Output</div>
+
+                <div class="output-status">
+                  <span id="statusDot" class="status-dot"></span>
+
+                  <span id="statusText"> Ready </span>
+                </div>
+              </div>
+
+              <div id="output" class="output">
+                <div class="output-empty">
+                  Run your solution to see the output here...
+                </div>
+              </div>
+
+              <div class="debug-grid">
+                <div class="debug-card">
+                  <span> Execution </span>
+
+                  <strong id="executionTime"> — </strong>
+                </div>
+
+                <div class="debug-card">
+                  <span> Output Lines </span>
+
+                  <strong id="outputLines"> 0 </strong>
+                </div>
+
+                <div class="debug-card">
+                  <span> Status </span>
+
+                  <strong id="executionStatus"> Waiting </strong>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <!-- =========================
+           FOOTER
+      ========================== -->
+
+      <footer>
+        <div class="container">
+          Built with TypeScript for
+          <a
+            href="https://github.com/marleyDip"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            MarleyDip
+          </a>
+          · Problem Solving Lab
+        </div>
+      </footer>
+    </div>
+
+    <!-- =========================
+         BASIC UI INTERACTION
+         Your TypeScript can replace
+         these handlers with the real
+         application logic.
+    ========================== -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      });
+    </script>
+  </body>
+</html>

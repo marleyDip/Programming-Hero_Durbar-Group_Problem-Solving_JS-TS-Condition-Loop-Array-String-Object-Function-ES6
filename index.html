@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Problem Solving Playground · JS &amp; TS</title>
+    <meta
+      name="description"
+      content="Fourteen JavaScript and TypeScript problems across condition, loop, array, string, object, function and ES6. Read each solution and run it on your own input."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+
+  <body>
+    <div class="aurora" aria-hidden="true"></div>
+
+    <header class="top">
+      <a class="brand" href="#" aria-label="Problem Solving Playground">
+        <span class="mark" aria-hidden="true">{ }</span> Playground
+      </a>
+      <div class="top-right">
+        <div class="progress" title="Solved problems are saved in this browser">
+          <div class="ring" id="ring" aria-hidden="true"></div>
+          <span id="progress-text">0 of 14 solved</span>
+          <button class="link" id="reset-progress" type="button">Reset</button>
+        </div>
+        <a
+          class="btn small"
+          href="https://github.com/marleyDip/Programming-Hero_Durbar-Group_Problem-Solving_JS-TS-Condition-Loop-Array-String-Object-Function-ES6"
+          target="_blank"
+          rel="noopener"
+          >View repo</a
+        >
+      </div>
+    </header>
+
+    <section class="hero">
+      <h1>Problem solving,<br />run live in your browser.</h1>
+      <p>
+        Condition, loop, array, string, object, function and ES6. Open a
+        challenge, read the TypeScript solution, then feed it your own input.
+      </p>
+      <dl class="stats">
+        <div>
+          <dt>Problems</dt>
+          <dd id="stat-problems">0</dd>
+        </div>
+        <div>
+          <dt>Topics</dt>
+          <dd id="stat-topics">0</dd>
+        </div>
+        <div>
+          <dt>Solved by you</dt>
+          <dd id="stat-solved">0</dd>
+        </div>
+      </dl>
+    </section>
+
+    <main class="layout">
+      <aside class="side" aria-label="Problem list">
+        <div class="search">
+          <input
+            id="search"
+            type="search"
+            placeholder="Search problems"
+            aria-label="Search problems"
+            autocomplete="off"
+          />
+          <kbd>/</kbd>
+        </div>
+        <div
+          class="chips"
+          id="chips"
+          role="group"
+          aria-label="Filter by topic"
+        ></div>
+        <div class="list" id="list" role="listbox" aria-label="Problems"></div>
+      </aside>
+      <section class="bench" id="bench" aria-label="Workbench"></section>
+    </main>
+
+    <footer class="foot">
+      Built from the topics in marleyDip’s Programming Hero × Durbar Group
+      problem-solving repo.
+    </footer>
+
+    <script src="dist/problems.js"></script>
+    <script src="dist/main.js"></script>
+  </body>
+</html>
