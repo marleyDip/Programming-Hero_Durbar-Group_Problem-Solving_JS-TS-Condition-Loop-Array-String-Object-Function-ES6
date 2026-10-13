@@ -5,7 +5,7 @@ Your solution should take advantage of the fact that both input arrays are alrea
 */
 
 // Using Two-Pointer Technique
-/* function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
+function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
   const result: number[] = [];
   let i = 0;
   let j = 0;
@@ -71,10 +71,10 @@ Your solution should take advantage of the fact that both input arrays are alrea
   // Complexity
   // Time complexity: O(n + m) — each element is processed once, where n and m are the lengths of the two arrays.
   // Space complexity: O(n + m) — the result array stores all elements.
-} */
+}
 
 // Using concat() or spread operator + sort()
-function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
+/* function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
   // JavaScript's default sort() compares values as strings.
   return arr1.concat(arr2).sort((a, b) => a - b);
 
@@ -83,7 +83,44 @@ function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
   // Complexity
   // Time complexity: O((n + m)log(n + m))
   // Space complexity: O(n + m)
-}
+} */
+
+// Using for loops and sort()
+/* function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
+  const result: number[] = [];
+
+  for (let i = 0; i < arr1.length; i++) {
+    result.push(arr1[i]!);
+  }
+
+  for (let j = 0; j < arr2.length; j++) {
+    result.push(arr2[j]!);
+  }
+
+  result.sort((a, b) => a - b);
+
+  return result;
+
+  // Complexity
+  // Time complexity: O((n + m)log(n + m))
+  // Space complexity: O(n + m)
+} */
+
+// Using recursion
+/* function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
+  if (arr1.length === 0) return arr2;
+  if (arr2.length === 0) return arr1;
+
+  if (arr1[0]! <= arr2[0]!) {
+    return [arr1[0]!, ...mergeSortedArrays(arr1.slice(1), arr2)];
+  }
+
+  return [arr2[0]!, ...mergeSortedArrays(arr1, arr2.slice(1))];
+
+  // Complexity
+  // Time complexity: Up to O((n + m)2) - repeated slicing and array copying
+  // Space complexity: O((n + m)2)
+} */
 
 console.log(mergeSortedArrays([1, 3, 5], [2, 4, 6])); // [1, 2, 3, 4, 5, 6]
 
