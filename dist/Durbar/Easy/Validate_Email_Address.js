@@ -28,40 +28,41 @@ A string is considered a valid email address if and only if:
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 // Using RegEx
-/* function isValidEmail(email: string): boolean {
-  const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
-
-  return pattern.test(email);
-
-  // Complexity analysis
-  // Time complexity: O(n), where n is the email string length.
-  // Space complexity: O(1) auxiliary space for the fixed regular expression, excluding implementation-dependent regex engine memory.
-} */
-// Using split() and conditions
 function isValidEmail(email) {
-    const parts = email.split("@");
-    // console.log(parts);
-    if (parts.length !== 2)
-        return false;
-    const [local, domainAndTld] = parts;
-    if (local === undefined || domainAndTld === undefined)
-        return false;
-    const domainParts = domainAndTld.split(".");
-    // console.log(domainParts);
-    if (domainParts.length !== 2)
-        return false;
-    //   const domain = domainParts[0];
-    //   const tld = domainParts[1];
-    //   if (domain === undefined || tld === undefined) return false;
-    const [domain, tld = ""] = domainParts;
-    // console.log(tld);
-    if (!local || !domain || tld.length < 2)
-        return false;
-    const validLocal = /^[a-zA-Z0-9._-]+$/.test(local);
-    const validDomain = /^[a-zA-Z0-9-]+$/.test(domain);
-    const validTld = /^[a-zA-Z]+$/.test(tld);
-    return validLocal && validDomain && validTld;
+    const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+    return pattern.test(email);
+    // Complexity analysis
+    // Time complexity: O(n), where n is the email string length.
+    // Space complexity: O(1) auxiliary space for the fixed regular expression, excluding implementation-dependent regex engine memory.
 }
+// Using split() and conditions
+/* function isValidEmail(email: string): boolean {
+  const parts = email.split("@");
+  // console.log(parts);
+  if (parts.length !== 2) return false;
+
+  const [local, domainAndTld] = parts;
+  if (local === undefined || domainAndTld === undefined) return false;
+
+  const domainParts = domainAndTld.split(".");
+  // console.log(domainParts);
+  if (domainParts.length !== 2) return false;
+
+  //   const domain = domainParts[0];
+  //   const tld = domainParts[1];
+  //   if (domain === undefined || tld === undefined) return false;
+
+  const [domain, tld = ""] = domainParts;
+  // console.log(tld);
+
+  if (!local || !domain || tld.length < 2) return false;
+
+  const validLocal = /^[a-zA-Z0-9._-]+$/.test(local);
+  const validDomain = /^[a-zA-Z0-9-]+$/.test(domain);
+  const validTld = /^[a-zA-Z]+$/.test(tld);
+
+  return validLocal && validDomain && validTld;
+} */
 const emails = [
     "user@example", // false
     "user@example.com", // true

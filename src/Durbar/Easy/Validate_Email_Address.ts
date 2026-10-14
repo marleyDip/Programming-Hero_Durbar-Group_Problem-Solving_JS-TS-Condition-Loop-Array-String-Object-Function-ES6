@@ -27,7 +27,7 @@ A string is considered a valid email address if and only if:
 */
 
 // Using RegEx
-/* function isValidEmail(email: string): boolean {
+function isValidEmail(email: string): boolean {
   const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
 
   return pattern.test(email);
@@ -35,10 +35,10 @@ A string is considered a valid email address if and only if:
   // Complexity analysis
   // Time complexity: O(n), where n is the email string length.
   // Space complexity: O(1) auxiliary space for the fixed regular expression, excluding implementation-dependent regex engine memory.
-} */
+}
 
 // Using split() and conditions
-function isValidEmail(email: string): boolean {
+/* function isValidEmail(email: string): boolean {
   const parts = email.split("@");
   // console.log(parts);
   if (parts.length !== 2) return false;
@@ -64,7 +64,7 @@ function isValidEmail(email: string): boolean {
   const validTld = /^[a-zA-Z]+$/.test(tld);
 
   return validLocal && validDomain && validTld;
-}
+} */
 
 const emails = [
   "user@example", // false
