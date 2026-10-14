@@ -18,6 +18,10 @@ function chunkArray(arr, size) {
         i = i + size;
     }
     return result;
+    // Complexity analysis
+    // Let n be the array length and k be the chunk size.
+    // Time complexity: O(n), because every element is copied once.
+    // Space complexity: O(n), because the returned chunks contain all the original elements.
 }
 console.log(chunkArray([1, 2, 3, 4, 5], 2)); // [[1, 2], [3, 4], [5]]
 console.log(chunkArray([1, 2, 3, 4, 5, 6], 3)); // [[1, 2, 3], [4, 5, 6]]
