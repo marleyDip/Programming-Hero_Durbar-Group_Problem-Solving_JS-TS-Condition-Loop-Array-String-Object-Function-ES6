@@ -18,7 +18,7 @@ How it works
 */
 
 // Using map Method
-/* function toQueryString(params: Record<string, string | number>): string {
+function toQueryString(params: Record<string, string | number>): string {
   // console.log(Object.entries(params)); // [ [ 'first name', 'John Doe' ], [ 'city', 'New York' ] ]
 
   return Object.entries(params)
@@ -30,10 +30,10 @@ How it works
   // Complexity analysis
   // Time complexity: O(n+L), where n is the number of key-value pairs and L is the total number of characters encoded.
   // Space complexity: O(n+L) for the generated strings.
-} */
+}
 
 // Using for...of loop
-function toQueryString(params: Record<string, string | number>): string {
+/* function toQueryString(params: Record<string, string | number>): string {
   const pairs: string[] = [];
 
   for (const [key, value] of Object.entries(params)) {
@@ -45,7 +45,7 @@ function toQueryString(params: Record<string, string | number>): string {
   // Complexity analysis
   // Time complexity: O(n+L), where n is the number of key-value pairs and L is the total number of characters encoded.
   // Space complexity: O(n+L) for the generated strings.
-}
+} */
 
 console.log(toQueryString({ search: "hello world", page: 1 })); // "search=hello%20world&page=1"
 

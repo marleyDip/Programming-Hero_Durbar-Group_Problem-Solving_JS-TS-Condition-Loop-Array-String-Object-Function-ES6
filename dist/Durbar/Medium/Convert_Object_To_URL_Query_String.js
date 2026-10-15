@@ -19,30 +19,31 @@ How it works
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 // Using map Method
-/* function toQueryString(params: Record<string, string | number>): string {
-  // console.log(Object.entries(params)); // [ [ 'first name', 'John Doe' ], [ 'city', 'New York' ] ]
-
-  return Object.entries(params)
-    .map(([key, value]) => {
-      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+function toQueryString(params) {
+    // console.log(Object.entries(params)); // [ [ 'first name', 'John Doe' ], [ 'city', 'New York' ] ]
+    return Object.entries(params)
+        .map(([key, value]) => {
+        return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     })
-    .join("&");
+        .join("&");
+    // Complexity analysis
+    // Time complexity: O(n+L), where n is the number of key-value pairs and L is the total number of characters encoded.
+    // Space complexity: O(n+L) for the generated strings.
+}
+// Using for...of loop
+/* function toQueryString(params: Record<string, string | number>): string {
+  const pairs: string[] = [];
+
+  for (const [key, value] of Object.entries(params)) {
+    pairs.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+  }
+
+  return pairs.join("&");
 
   // Complexity analysis
   // Time complexity: O(n+L), where n is the number of key-value pairs and L is the total number of characters encoded.
   // Space complexity: O(n+L) for the generated strings.
 } */
-// Using for...of loop
-function toQueryString(params) {
-    const pairs = [];
-    for (const [key, value] of Object.entries(params)) {
-        pairs.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-    }
-    return pairs.join("&");
-    // Complexity analysis
-    // Time complexity: O(n+L), where n is the number of key-value pairs and L is the total number of characters encoded.
-    // Space complexity: O(n+L) for the generated strings.
-}
 console.log(toQueryString({ search: "hello world", page: 1 })); // "search=hello%20world&page=1"
 console.log(toQueryString({ sort: "asc", limit: 10 })); // "sort=asc&limit=10"
 console.log(toQueryString({ name: "Sufian", age: 25 })); // "name=Sufian&age=25"
